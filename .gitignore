@@ -1,0 +1,5 @@
+/vendor
+Gopkg.lock
+/app/node_modules
+/app/yarn.lock
+/app/package-lock.json
