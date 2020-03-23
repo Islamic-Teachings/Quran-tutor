@@ -1,5 +1,5 @@
-//@ts-ignore
 import React, { Component, FunctionComponent } from 'react'
+import PropTypes from 'prop-types';
 import {
   Button,
   Container,
@@ -8,7 +8,7 @@ import {
   Responsive,
   Segment,
   Sidebar,
-  Visibility,
+  Visibility
 } from 'semantic-ui-react'
 
 import { HomepageHeading } from './HomepageHeading'
@@ -23,7 +23,8 @@ if (!('mobilecheck' in window)) {
 }
 
 type DesktopState = {
-  fixed: boolean
+  fixed: boolean,
+  activeItem: NavItem
 }
 
 const getWidth = (): number => {
@@ -32,78 +33,97 @@ const getWidth = (): number => {
   return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
 
-class DesktopContainer extends Component {
-  state: DesktopState = {
-    fixed: true
-  }
+export type NavItem = {
+  name: string,
+  url: string,
+  component: PropTypes.ReactElementLike | PropTypes.ReactComponentLike,
+  icon?: any
+}
 
-  hideFixedMenu = () => this.setState({ fixed: false })
-  showFixedMenu = () => this.setState({ fixed: true })
+export type NavOptions = {
+  items: NavItem[],
+  loggedIn: boolean
+}
 
-  render() {
-    const { children } = this.props
-    const { fixed } = this.state
+const DesktopContainer: FunctionComponent<NavOptions> = ({children, items}) => {
+  let [fixed, setFixed] = React.useState(true)
+  let [activeItem, setActiveItem] = React.useState(items[0])
 
-    return (
-      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}
+  const hideFixedMenu = () => setFixed(false)
+  const showFixedMenu = () => setFixed(true)
+  const handleItemClick = (item: NavItem ) => setActiveItem(item)
+
+  return (
+    <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+      <Visibility
+        once={false}
+        onBottomPassed={showFixedMenu}
+        onBottomPassedReverse={hideFixedMenu}
+      >
+        <Segment
+          textAlign='center'
+          style={{ minHeight: 700, padding: '1em 0em' }}
+          vertical
         >
-          <Segment
-            inverted
-            textAlign='center'
-            style={{ minHeight: 700, padding: '1em 0em' }}
-            vertical
+          <Menu
+            fixed={fixed ? 'top' : 'left'}
+            pointing
+            secondary
+            size='large'
           >
-            <Menu
-              fixed={fixed ? 'top' : 'left'}
-              inverted
-              pointing
-              secondary
-              size='large'
-            >
-              <Container>
-                <Menu.Item as='a' active>
-                  Home
-                </Menu.Item>
-                <Menu.Item as='a'>Quran</Menu.Item>
-                <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed}>
-                    Log in
-                  </Button>
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
-                </Menu.Item>
-              </Container>
-            </Menu>
-            <HomepageHeading mobile={false} content='hey' />
-          </Segment>
-        </Visibility>
-        {children}
-      </Responsive>
-    )
-  }
+            <Container>
+            {items.map(item => (
+              // @ts-ignore
+              <Menu.Item as='a' active={activeItem.name == item.name } onClick={(_:any) => handleItemClick(item)}>
+                {(item.icon)? <img src={item.icon}/>:''}
+                {item.name}
+              </Menu.Item>))
+            }
+              <Menu.Item position='right'>
+                <Button as='a' inverted={!fixed}>
+                <Icon name="sign in"/>
+                  Log in
+                </Button>
+                <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                <Icon name="user outline"/>
+                  Register
+                </Button>
+              </Menu.Item>
+            </Container>
+          </Menu>
+        </Segment>
+      </Visibility>
+      {children}
+    </Responsive>
+  )
 }
 
 type MobileContainerPropType = {
-  sidebarOpened: boolean
+  sidebarOpened: boolean,
+  activeItem: NavItem
 }
 
 class MobileContainer extends Component {
+  private items: NavItem[]
+
+  constructor(props: NavOptions) {
+    super(props)
+    this.items = props.items
+  }
+
   state: MobileContainerPropType = {
-    sidebarOpened: true
+    sidebarOpened: true,
+    activeItem: this.items[0]
   }
 
   handleSidebarHide = () => this.setState({ sidebarOpened: false })
-
   handleToggle = () => this.setState({ sidebarOpened: true })
+  handleItemClick = (e: any, name: NavItem ) => this.setState({ activeItem: name })
 
   render() {
     const { children } = this.props
     const { sidebarOpened } = this.state
+    let { activeItem } = this.state
 
     return (
       <Responsive
@@ -119,25 +139,21 @@ class MobileContainer extends Component {
           secondary
           visible={sidebarOpened}
         >
-          <Menu.Item as='a' active>
-            Home
-          </Menu.Item>
-          <Menu.Item as='a'>Work</Menu.Item>
-          <Menu.Item as='a'>Company</Menu.Item>
-          <Menu.Item as='a'>Careers</Menu.Item>
-          <Menu.Item as='a'>Log in</Menu.Item>
-          <Menu.Item as='a'>Sign Up</Menu.Item>
+        {this.items.map(item => (
+          <Menu.Item as='a' active={activeItem.name == item.name }>
+            {item.name}
+          </Menu.Item>))
+        }
         </Sidebar>
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
           <Segment
-            inverted
             textAlign='center'
             style={{ minHeight: 350, padding: '1em 0em' }}
             vertical
           >
             <Container>
-              <Menu inverted pointing secondary size='large'>
+              <Menu pointing secondary size='large'>
                 <Menu.Item onClick={this.handleToggle}>
                   <Icon name='sidebar' />
                 </Menu.Item>
@@ -151,7 +167,6 @@ class MobileContainer extends Component {
                 </Menu.Item>
               </Menu>
             </Container>
-            <HomepageHeading mobile content='Hey' />
           </Segment>
           {children}
         </Sidebar.Pusher>
@@ -161,16 +176,18 @@ class MobileContainer extends Component {
 }
 
 
-export const ResponsiveContainer: FunctionComponent = ({ children }) => {
-  //@ts-ignore
-  console.log((window.mobilecheck()))
+export const ResponsiveContainer: FunctionComponent<NavOptions> = ({ children, items, loggedIn}) => {
+  let data = {
+    items,
+    loggedIn
+  }
   return (
   <div>
     {
       //@ts-ignore
       (window.mobilecheck())
-        ? <MobileContainer>{children}</MobileContainer>
-        : <DesktopContainer>{children}</DesktopContainer>
+        ? <MobileContainer {...data}>{children}</MobileContainer>
+        : <DesktopContainer {...data}>{children}</DesktopContainer>
     }
   </div>
 )}

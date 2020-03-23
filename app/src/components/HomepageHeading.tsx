@@ -17,7 +17,6 @@ export const HomepageHeading: FunctionComponent<propTypes>  = ({ mobile, content
     <Header
       as='h1'
       content={content}
-      inverted
       style={{
         fontSize: mobile ? '2em' : '4em',
         fontWeight: 'normal',

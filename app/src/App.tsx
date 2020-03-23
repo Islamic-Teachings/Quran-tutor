@@ -1,14 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { ResponsiveContainer } from './components';
+import { ResponsiveContainer, defaultNavOptions } from './components';
 import 'semantic-ui-less/semantic.less'
 
 function App() {
+  console.log({...defaultNavOptions})
   return (
-    <ResponsiveContainer>
-
-    </ResponsiveContainer>
+    <ResponsiveContainer {...defaultNavOptions}/>
   );
 }
 
