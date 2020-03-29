@@ -17,7 +17,7 @@ func main() {
 	ws := router.Group("/ws")
 	{
 		ws.GET("/*proxypath", func(c *gin.Context) {
-			s.wshandler(c.Writer, c.Request)
+			s.Wshandler(c.Writer, c.Request)
 		})
 	}
 

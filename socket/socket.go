@@ -44,7 +44,8 @@ func NewSocket(prodURL string) *Socket {
 	return s
 }
 
-func (s *Socket) wshandler(w http.ResponseWriter, r *http.Request) {
+// Wshandler is socket handler.
+func (s *Socket) Wshandler(w http.ResponseWriter, r *http.Request) {
 	conn, err := wsupgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Fatalln(fmt.Errorf("Failed to set websocket upgrade:\n%w", err))

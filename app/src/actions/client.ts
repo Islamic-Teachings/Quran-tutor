@@ -43,16 +43,20 @@ function* callAPITask<T extends Payload> (request: Request) {
       reqGen = yield call(deleteData, request.urlConfig.url, request.urlConfig.headers);
       break;
     case 'POST':
+      // @ts-ignore
       reqGen = yield call(postData, request.urlConfig.url, request.payload, request.urlConfig.headers);
       break;
     case 'PUT':
+      // @ts-ignore
       reqGen = yield call(putData, request.urlConfig.url, request.payload, request.urlConfig.headers);
       break;
     case 'PUT':
+      // @ts-ignore
       reqGen = yield call(patchData, request.urlConfig.url, request.payload, request.urlConfig.headers);
       break;
   }
   let res: T
+  // @ts-ignore
   reqGen.pipe(
     tap((data: T) => {
       res = data
@@ -60,6 +64,7 @@ function* callAPITask<T extends Payload> (request: Request) {
   ).subscribe(_ => {
     put(<Action>{type: DISCONNECT})
   })
+  // @ts-ignore
   yield put(<Action>{type: SET_API_DATA, res: res, name: request.name})
 }
 

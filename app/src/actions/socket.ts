@@ -1,14 +1,17 @@
-import * as WebSocket from 'ws'
+import * as Ws from 'ws'
 import { eventChannel, END, EventChannel } from 'redux-saga';
 import { call, put, take, fork, cancel, cancelled } from 'redux-saga/effects'
 import { Action, SET_SOCKET_STATUS, SET_MESSAGE_PAYLOAD, DISCONNECT, SET_DISCONNECT_STATUS } from './types';
 
-export const createWebSocketConnection = (url: string) => {
+export const createWebSocketConnection = (host: string, port: number, path?: string) => {
   return new Promise((resolve, reject) => {
-    const socket = new WebSocket(url)
+    const socket = new Ws.Server(<Ws.ServerOptions>{host, port, path}, () => {
+    })
+    //@ts-ignore
     socket.onopen = _ => {
       resolve(socket)
     }
+    //@ts-ignore
     socket.onclose = err => {
       reject(err)
     }
@@ -36,6 +39,7 @@ function* listenForSocketMessages(name: string, url: string) {
   let channel: EventChannel<any>
 
   try {
+    //@ts-ignore
     socket  = yield call(createWebSocketConnection, url);
     channel = yield call(createSocketChannel, socket);
     yield put(<Action>{type: SET_SOCKET_STATUS, status: true})
@@ -50,8 +54,10 @@ function* listenForSocketMessages(name: string, url: string) {
   } finally {
     if (yield cancelled()) {
       // close the channel
+      //@ts-ignore
       channel.close();
       // close the WebSocket connection
+      //@ts-ignore
       socket.close();
     } else {
       yield put(<Action>{type: SET_SOCKET_STATUS, status: false})

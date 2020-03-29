@@ -1,26 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.5f361e03.chunk.css",
-    "main.js": "/static/js/main.561f37e0.chunk.js",
-    "main.js.map": "/static/js/main.561f37e0.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.7bc453c4.js",
-    "runtime-main.js.map": "/static/js/runtime-main.7bc453c4.js.map",
-    "static/css/2.739a5063.chunk.css": "/static/css/2.739a5063.chunk.css",
-    "static/js/2.74bfd688.chunk.js": "/static/js/2.74bfd688.chunk.js",
-    "static/js/2.74bfd688.chunk.js.map": "/static/js/2.74bfd688.chunk.js.map",
+    "main.css": "/static/css/main.d1b05096.chunk.css",
+    "main.js": "/static/js/main.c7287a3d.chunk.js",
+    "main.js.map": "/static/js/main.c7287a3d.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.70302f69.js",
+    "runtime-main.js.map": "/static/js/runtime-main.70302f69.js.map",
+    "static/css/2.322eb634.chunk.css": "/static/css/2.322eb634.chunk.css",
+    "static/js/2.11be2aab.chunk.js": "/static/js/2.11be2aab.chunk.js",
+    "static/js/2.11be2aab.chunk.js.map": "/static/js/2.11be2aab.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.c2c1592775b3f8d56a4e6f775b34ab17.js": "/precache-manifest.c2c1592775b3f8d56a4e6f775b34ab17.js",
+    "precache-manifest.07bec8d45a309382cbd8d68175625638.js": "/precache-manifest.07bec8d45a309382cbd8d68175625638.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/2.739a5063.chunk.css.map": "/static/css/2.739a5063.chunk.css.map",
-    "static/css/main.5f361e03.chunk.css.map": "/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.74bfd688.chunk.js.LICENSE.txt": "/static/js/2.74bfd688.chunk.js.LICENSE.txt",
-    "static/media/semantic.less": "/static/media/outline-icons.ef60a4f6.woff"
+    "static/css/2.322eb634.chunk.css.map": "/static/css/2.322eb634.chunk.css.map",
+    "static/css/main.d1b05096.chunk.css.map": "/static/css/main.d1b05096.chunk.css.map",
+    "static/js/2.11be2aab.chunk.js.LICENSE.txt": "/static/js/2.11be2aab.chunk.js.LICENSE.txt",
+    "static/media/semantic.less": "/static/media/outline-icons.ef60a4f6.woff",
+    "static/media/logo.svg": "/static/media/logo.bee1bfb2.svg",
+    "static/media/quran.svg": "/static/media/quran.74163fd1.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7bc453c4.js",
-    "static/css/2.739a5063.chunk.css",
-    "static/js/2.74bfd688.chunk.js",
-    "static/css/main.5f361e03.chunk.css",
-    "static/js/main.561f37e0.chunk.js"
+    "static/js/runtime-main.70302f69.js",
+    "static/css/2.322eb634.chunk.css",
+    "static/js/2.11be2aab.chunk.js",
+    "static/css/main.d1b05096.chunk.css",
+    "static/js/main.c7287a3d.chunk.js"
   ]
 }

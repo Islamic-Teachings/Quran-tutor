@@ -86,7 +86,7 @@ const DesktopContainer: FunctionComponent<NavOptions> = ({children, items}) => {
                 </Button>
                 <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
                 <Icon name="user outline"/>
-                  Register
+                  Hi Aya
                 </Button>
               </Menu.Item>
             </Container>
