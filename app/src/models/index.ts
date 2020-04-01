@@ -1,26 +1,19 @@
 export interface Payload {
+  name: string
 }
 
-type method = 'GET'|'POST'|'PUT'|'DELETE'|'PATCH'
+type Method = 'GET'|'POST'|'PUT'|'DELETE'|'PATCH'
 
-export type Headers = {
-  string: any
-}
-
-export type URLConfig = {
-  url: string,
-  method: method,
-  headers: Headers
+type Headers = {
+  [key:string]: any
 }
 
 export type Request = {
-  urlConfig: URLConfig,
   name: string,
-  payload?: Payload
-}
-
-export type ConfigsState = {
-  urls: {string: URLConfig},
-  success: boolean,
-  failure: boolean
+  method: Method,
+  api: string,
+  body?: Payload,
+  id?: string,
+  headers?: Headers,
+  query?: Headers
 }

@@ -1,17 +1,16 @@
-import { Payload } from '../models'
+import { Payload, Request } from '../models'
 export const SET_MESSAGE_PAYLOAD = 'SET_MESSAGE_PAYLOAD'
 export const DISCONNECT = 'DISCONNECT'
 export const DELETE_MESSAGE = 'DELETE_MESSAGE'
-export const GET_CONFIGS = 'GET_CONFIGS'
 export const OPEN_SOCKET = 'OPEN_SOCKET'
-export const CALL = 'CALL'
 export const SET_SOCKET_STATUS = 'SET_SOCKET_STATUS'
 export const SET_DISCONNECT_STATUS = 'SET_DISCONNECT_STATUS'
-export const SET_API_DATA = 'SET_API_DATA'
+export const SEND_MESSAGE = 'SEND_MESSAGE'
+export const START_SOCKET = 'START_SOCKET'
 
 type SetMessagePayload = {
   type: typeof SET_MESSAGE_PAYLOAD
-  payload: Payload | string,
+  payload: Payload | Payload[],
   name: string
 }
 
@@ -23,26 +22,22 @@ type OpenSocketAction = {
 type SetSocketStatusAction = {
   type: typeof SET_SOCKET_STATUS | typeof SET_DISCONNECT_STATUS,
   status: boolean,
+  name: string,
   err?: Error
 }
 
-type CallAPIAction = {
-  type: typeof CALL,
-  name: string,
-  payload?: Payload,
-  error?: Error,
-  res?: Payload
-}
-
-type SetCallAPIDataAction = {
-  type: typeof SET_API_DATA,
-  name: string,
-  error?: Error,
-  res?: Payload
-}
-
 type DisconnectAction = {
-  type: typeof DISCONNECT
+  type: typeof DISCONNECT,
 }
 
-export type Action = SetMessagePayload | OpenSocketAction | SetSocketStatusAction | CallAPIAction | SetCallAPIDataAction | DisconnectAction
+type SendMessageAction = {
+  type: typeof SEND_MESSAGE,
+  request: Request
+}
+
+type StartSocket = {
+  type: typeof START_SOCKET,
+  url: string
+}
+
+export type Action = SetMessagePayload | OpenSocketAction | SetSocketStatusAction | DisconnectAction | SendMessageAction | StartSocket

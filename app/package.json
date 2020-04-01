@@ -45,6 +45,7 @@
   "devDependencies": {
     "@craco/craco": "^5.6.3",
     "@semantic-ui-react/craco-less": "^1.2.1",
+    "@types/redux-saga": "^0.10.5",
     "@types/websocket": "^1.0.0",
     "react-hot-loader": "^4.12.20",
     "semantic-ui-less": "^2.4.1"
